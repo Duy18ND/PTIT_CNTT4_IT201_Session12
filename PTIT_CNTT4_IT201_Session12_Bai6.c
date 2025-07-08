@@ -37,23 +37,43 @@ int getlength(Node* head) {
 
 void searchMid(Node* head, int* outIndex, int* outValue) {
     int len = getlength(head);
-    int midIndex = len / 2;
-
+    
+    if (len == 0) {
+        if (outIndex != NULL) *outIndex = -1;
+        if (outValue != NULL) *outValue = 0;
+        return;
+    }
+    
+    int midIndex = len / 2; 
+    
     Node* temp = head;
     for (int i = 0; i < midIndex; i++) {
         temp = temp->next;
     }
-
-    if (temp != NULL && temp->data % 2 == 0 && temp->next != NULL) {
-        temp = temp->next;
-        midIndex += 1;
-    }
-
+    
     if (outIndex != NULL) *outIndex = midIndex;
     if (outValue != NULL) *outValue = temp->data;
 }
 
-
+void searchMidAlternative(Node* head, int* outIndex, int* outValue) {
+    int len = getlength(head);
+    
+    if (len == 0) {
+        if (outIndex != NULL) *outIndex = -1;
+        if (outValue != NULL) *outValue = 0;
+        return;
+    }
+    
+    int midIndex = (len - 1) / 2; 
+    
+    Node* temp = head;
+    for (int i = 0; i < midIndex; i++) {
+        temp = temp->next;
+    }
+    
+    if (outIndex != NULL) *outIndex = midIndex;
+    if (outValue != NULL) *outValue = temp->data;
+}
 
 int main() {
     Node* head = createNode(5);
@@ -74,12 +94,17 @@ int main() {
     node4->next = node5;
     node5->prev = node4;
 
+    printf("Danh sach:\n");
     printListNode(head);
+    
+    printf("Do dai danh sach: %d\n", getlength(head));
 
     int midIndex, midValue;
     searchMid(head, &midIndex, &midValue);
+    printf("\nPhan tu giua (phuong phap 1): Gia tri = %d, Index = %d\n", midValue, midIndex);
 
-    printf("Gia tri = %d, Index = %d\n", midValue, midIndex);
+    searchMidAlternative(head, &midIndex, &midValue);
+    printf("Phan tu giua (phuong phap 2): Gia tri = %d, Index = %d\n", midValue, midIndex);
 
     return 0;
 }
