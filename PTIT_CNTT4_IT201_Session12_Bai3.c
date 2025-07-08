@@ -14,6 +14,7 @@ Node* createNode(int data) {
     newNode->prev = NULL;
     return newNode;
 }
+
 //Ham in
 void printListNode(Node* head) {
     Node* temp = head;
@@ -25,23 +26,41 @@ void printListNode(Node* head) {
     printf("NULL\n");
 }
 
-//Ham them vao cuoi DSLKD
+//Ham them vao dau DSLKD
 Node* insertStart(Node* head, int data) {
     Node* newNode = createNode(data);
-    Node* temp = head;
-    if (temp == NULL) {
+    
+    if (head == NULL) {
         return newNode;
     }
+    
+    newNode->next = head;
+    head->prev = newNode;
+    
+    return newNode;
+}
+
+//Ham them vao cuoi DSLKD
+Node* insertEnd(Node* head, int data) {
+    Node* newNode = createNode(data);
+    
+    if (head == NULL) {
+        return newNode;
+    }
+    
+    Node* temp = head;
     while (temp->next != NULL) {
         temp = temp->next;
     }
+    
     temp->next = newNode;
     newNode->prev = temp;
-
+    
     return head;
 }
+
 int main() {
-    //Them vao cuoi DSLKD
+    //Them vao dau va cuoi DSLKD
     Node* head = createNode(1);
     Node* node2 = createNode(2);
     Node* node3 = createNode(3);
@@ -60,10 +79,18 @@ int main() {
     node4->next = node5;
     node5->prev = node4;
 
+    printf("Danh sach ban dau:\n");
     printListNode(head);
 
     //Them dau
-    head = insertStart(head, 125);
+    printf("\nThem 0 vao dau:\n");
+    head = insertStart(head, 0);
     printListNode(head);
+    
+    //Them cuoi
+    printf("\nThem 6 vao cuoi:\n");
+    head = insertEnd(head, 6);
+    printListNode(head);
+    
     return 0;
 }
